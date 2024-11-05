@@ -53,7 +53,7 @@ public class Cliente {
         String retorno = "Nome: " + this.nome + "\n";
         retorno += "CPF: " + this.cpf + "\n";
         retorno += "Telefone: " + this.telefone + "\n";
-        retorno += "Endereço:\n" + this.endereco.getEndereco();
+        retorno += "Endereço:\n" + this.endereco.toString();
         return retorno;
     }
 }

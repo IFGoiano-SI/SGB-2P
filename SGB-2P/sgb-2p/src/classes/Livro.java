@@ -1,18 +1,24 @@
 package classes;
 
 public class Livro {
+    private int codigo;
     private String titulo;
     private String autor;
     private int anoPublicacao;
     private int numExemplares;
     private int exemplaresDisponiveis;
 
-    public Livro(String titulo, String autor, int anoPublicacao, int numExemplares) {
+    public Livro(int codigo,String titulo, String autor, int anoPublicacao, int numExemplares) {
+        this.codigo = codigo;
         this.titulo = titulo;
         this.autor = autor;
         this.anoPublicacao = anoPublicacao;
         this.numExemplares = numExemplares;
         this.exemplaresDisponiveis = numExemplares;
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 
     public String getTitulo() {
