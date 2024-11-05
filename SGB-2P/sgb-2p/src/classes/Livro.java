@@ -3,18 +3,16 @@ package classes;
 public class Livro {
     private String titulo;
     private String autor;
-    private String editora;
     private int anoPublicacao;
-    private String isbn;
-    private boolean disponivel;
+    private int numExemplares;
+    private int exemplaresDisponiveis;
 
-    public Livro (String titulo, String autor, String editora, int anoPublicacao, String isbn) {
+    public Livro(String titulo, String autor, int anoPublicacao, int numExemplares) {
         this.titulo = titulo;
         this.autor = autor;
-        this.editora = editora;
         this.anoPublicacao = anoPublicacao;
-        this.isbn = isbn;
-        this.disponivel = true;
+        this.numExemplares = numExemplares;
+        this.exemplaresDisponiveis = numExemplares;
     }
 
     public String getTitulo() {
@@ -33,14 +31,6 @@ public class Livro {
         this.autor = autor;
     }
 
-    public String getEditora() {
-        return editora;
-    }
-
-    public void setEditora(String editora) {
-        this.editora = editora;
-    }
-
     public int getAnoPublicacao() {
         return anoPublicacao;
     }
@@ -49,35 +39,31 @@ public class Livro {
         this.anoPublicacao = anoPublicacao;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public int getNumExemplares() {
+        return numExemplares;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setNumExemplares(int numExemplares) {
+        this.numExemplares = numExemplares;
+        this.exemplaresDisponiveis = numExemplares;
     }
 
-    public boolean isDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
+    public int getExemplaresDisponiveis() {
+        return exemplaresDisponiveis;
     }
 
     public String getDadosLivro() {
         String retorno = "Título: " + this.titulo + "\n";
         retorno += "Autor: " + this.autor + "\n";
-        retorno += "Editora: " + this.editora + "\n";
         retorno += "Ano de Publicação: " + this.anoPublicacao + "\n";
-        retorno += "ISBN: " + this.isbn + "\n";
-        retorno += "Disponível: " + (this.disponivel ? "Sim" : "Não") + "\n";
+        retorno += "Número de Exemplares: " + this.numExemplares + "\n";
+        retorno += "Exemplares Disponíveis: " + this.exemplaresDisponiveis + "\n";
         return retorno;
     }
 
     public void emprestar() {
-        if (this.disponivel) {
-            this.disponivel = false;
+        if (this.exemplaresDisponiveis > 0) {
+            this.exemplaresDisponiveis--;
             System.out.println("Sucesso ao realizar o emprestimo do livro!");
         } else {
             System.out.println("Sinto muito, este livro já foi emprestado a outro cliente.");
@@ -85,8 +71,8 @@ public class Livro {
     }
 
     public void devolver() {
-        if (!this.disponivel) {
-            this.disponivel = true;
+        if (this.exemplaresDisponiveis < this.numExemplares) {
+            this.exemplaresDisponiveis++;
             System.out.println("Sucesso ao devolver o livro!");
         } else {
             System.out.println("Este livro já está disponivel novamente para emprestimo!");
