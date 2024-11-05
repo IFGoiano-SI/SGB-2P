@@ -13,8 +13,7 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-
-
+    // Getters e setters para os atributos
     public String getNome() {
         return nome;
     }
@@ -47,13 +46,12 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-
-
-    public String getDadosCliente() {
-        String retorno = "Nome: " + this.nome + "\n";
-        retorno += "CPF: " + this.cpf + "\n";
-        retorno += "Telefone: " + this.telefone + "\n";
-        retorno += "Endereço:\n" + this.endereco.getEndereco();
-        return retorno;
+    // Sobrescrita do método toString() para exibir os dados do cliente
+    @Override
+    public String toString() {
+        return "Nome: " + this.nome + "\n" +
+                "CPF: " + this.cpf + "\n" +
+                "Telefone: " + this.telefone + "\n" +
+                "Endereço:\n" + this.endereco.toString();
     }
 }
