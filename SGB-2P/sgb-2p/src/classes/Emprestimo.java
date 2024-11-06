@@ -3,8 +3,8 @@ package classes;
 public class Emprestimo {
     private Livro livro;
     private Cliente cliente;
-    private int data_emp;
-    private int data_dev;
+    private String data_emp;
+    private String data_dev;
 
     Emprestimo(Livro livro, Cliente cliente, int data_emp, int data_dev) {
         this.livro = livro;
