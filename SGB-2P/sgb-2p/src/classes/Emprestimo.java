@@ -24,4 +24,13 @@ public class Emprestimo {
     public int getData_dev() {
             return this.data_dev;
     }
+
+    @Override
+    public String toString() {
+        return "Livro: " + this.livro + "\n" +
+                "Cliente: " + this.cliente + "\n" +
+                "Data de empréstimo: " + this.data_emp + "\n" +
+                "Data de devolução" + this.data_dev + "\n";
+    }
+
 }
