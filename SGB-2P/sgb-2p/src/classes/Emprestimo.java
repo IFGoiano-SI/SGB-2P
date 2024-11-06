@@ -6,7 +6,7 @@ public class Emprestimo {
     private String data_emp;
     private String data_dev;
 
-    Emprestimo(Livro livro, Cliente cliente, int data_emp, int data_dev) {
+    Emprestimo(Livro livro, Cliente cliente, String data_emp, String data_dev) {
         this.livro = livro;
         this.cliente = cliente;
         this.data_emp = data_emp;
@@ -18,10 +18,10 @@ public class Emprestimo {
     public Cliente getCliente() {
         return this.cliente;
     }
-    public int getData_emp() {
+    public String getData_emp() {
         return this.data_emp;
     }
-    public int getData_dev() {
+    public String getData_dev() {
             return this.data_dev;
     }
 
