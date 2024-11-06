@@ -46,12 +46,5 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    // Sobrescrita do método toString() para exibir os dados do cliente
-    @Override
-    public String toString() {
-        return "Nome: " + this.nome + "\n" +
-                "CPF: " + this.cpf + "\n" +
-                "Telefone: " + this.telefone + "\n" +
-                "Endereço:\n" + this.endereco.toString();
     }
 }

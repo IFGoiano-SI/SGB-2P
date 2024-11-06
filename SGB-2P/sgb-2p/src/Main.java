@@ -1,10 +1,10 @@
-import classes.Biblioteca;
-
 public class Main {
-    public static void main(String[] args) {
-        Biblioteca biblioteca = new Biblioteca();
 
-        biblioteca.cadastrarCliente();  // cadastra um novo cliente
-        biblioteca.listarClientes();    // lista os clientes
-    }
-}
+    //array de 5 clientes
+    static Cliente[] clientes = new Cliente[5];
+    //array de 10 livros
+    static Livro[] livros = new Livro[10];
+
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
