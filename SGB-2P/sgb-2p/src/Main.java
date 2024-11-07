@@ -1,9 +1,8 @@
+import  classes.Endereco;
 import classes.Cliente;
+import classes.Emprestimo;
 import classes.Livro;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
 import java.util.Scanner;
 
 
@@ -14,9 +13,15 @@ public class Main {
     //array de 10 livros
     static Livro[] livros = new Livro[10];
 
+    static Emprestimo[] emprestimos = new Emprestimo[10];
+
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        //inicializar o sistema
+        Endereco end = new Endereco("Rua 1", "Bairro 1", "Cidade 1", "Estado 1", "76350000", 743);
+        Cliente cliente = new Cliente("Cliente 1", "12345678901", "123456789", end);
+        clientes[0] = cliente;
         menu();
     }
 
@@ -28,6 +33,90 @@ public class Main {
             }
         }
         return null;
+    }
+
+    public static Cliente getCliente(String cpf){
+        for (Cliente cliente : clientes) {
+            //percorrer o array de clientes e verificar se o cliente existe, se existir retornar o cliente
+            if (cliente != null && cliente.getCpf().equals(cpf)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public static Emprestimo getEmprestimo(Cliente cliente){
+        for (Emprestimo emprestimo : emprestimos) {
+            //percorrer o array de emprestimos e verificar se o emprestimo existe, se existir retornar o emprestimo
+            if (emprestimo != null && emprestimo.getCliente().equals(cliente)) {
+                return emprestimo;
+            }
+        }
+        return null;
+    }
+
+    public static void emprestarLivro(){
+        //emprestar livro
+        System.out.println("Emprestar livro");
+        System.out.print("Digite o código do livro: ");
+        int codigo = Integer.parseInt(scanner.nextLine());
+        Livro livro = getLivro(codigo);
+        if (livro == null) {
+            System.out.println("Livro não encontrado");
+            scanner.nextLine();
+            menu();
+            return;
+        }
+        if (livro.getNumExemplares() == 0) {
+            System.out.println("Livro indisponível");
+            scanner.nextLine();
+            menu();
+            return;
+        }
+        System.out.print("Digite o cpf do cliente: ");
+        String cpf = scanner.nextLine();
+        Cliente cliente = getCliente(cpf);
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado");
+            scanner.nextLine();
+            menu();
+            return;
+        }
+
+        //verificar se o cliente já possui um emprestimo
+        Emprestimo emprestimo = getEmprestimo(cliente);
+        if (emprestimo != null) {
+            System.out.println("Cliente já possui um emprestimo");
+            scanner.nextLine();
+            menu();
+            return;
+        }
+
+        System.out.print("Digite a data de empréstimo: ");
+        String dataEmp = scanner.nextLine();
+        System.out.print("Digite a data de devolução: ");
+        String dataDev = scanner.nextLine();
+        scanner.nextLine();
+        for (int i = 0; i < emprestimos.length; i++) {
+            if (emprestimos[i] == null) {
+                Emprestimo novoEmprestimo = new Emprestimo(livro, cliente, dataEmp, dataDev);
+                if (novoEmprestimo != null) {
+                    emprestimos[i] = novoEmprestimo;
+                    for(Livro l : livros){
+                        if(l != null && l.getCodigo() == livro.getCodigo()){
+                            if(l.emprestar()){
+                                System.out.println("Livro emprestado com sucesso!");
+                            }else{
+                                System.out.println("Não foi possível emprestar o livro");
+                                emprestimos[i] = null;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        menu();
     }
 
     public static void cadastrarLivro() {
@@ -111,8 +200,12 @@ public class Main {
                     }
                     break;
                 case 2:
-                    System.out.println("Cadastrar novo emprestimo");
-                    menu = 0;
+                    System.out.println("Deseja cadastrar um novo emprestimo?");
+                    int opc2 = Integer.parseInt(scanner.nextLine());
+                    if (opc2 == 1) {
+                        emprestarLivro();
+                        return;
+                    }
                     break;
                 case 3:
                     System.out.println("Cadastrar novo cliente");
