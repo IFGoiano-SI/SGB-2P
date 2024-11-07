@@ -8,7 +8,7 @@ public class Livro {
     private int numExemplares;
     private int exemplaresDisponiveis;
 
-    public Livro(int codigo,String titulo, String autor, int anoPublicacao, int numExemplares) {
+    public Livro(int codigo, String titulo, String autor, int anoPublicacao, int numExemplares) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.autor = autor;
@@ -67,21 +67,21 @@ public class Livro {
         return retorno;
     }
 
-    public void emprestar() {
+    public boolean emprestar() {
         if (this.exemplaresDisponiveis > 0) {
             this.exemplaresDisponiveis--;
-            System.out.println("Sucesso ao realizar o emprestimo do livro!");
+            return true;
         } else {
-            System.out.println("Sinto muito, este livro já foi emprestado a outro cliente.");
+            return false;
         }
     }
 
-    public void devolver() {
+    public boolean devolver() {
         if (this.exemplaresDisponiveis < this.numExemplares) {
             this.exemplaresDisponiveis++;
-            System.out.println("Sucesso ao devolver o livro!");
+            return true;
         } else {
-            System.out.println("Este livro já está disponivel novamente para emprestimo!");
+            return false;
         }
     }
 }
