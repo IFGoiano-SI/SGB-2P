@@ -55,6 +55,48 @@ public class Main {
         return null;
     }
 
+    //Metodo para exclusão de livros;
+    public static void excluirLivro(){
+        System.out.println("Digite o código do livro que deseja excluir: ");
+        //Scanner esperando um inteiro ser submetido pelo usuario impedindo que o programa quebre;
+        while (!scanner.hasNextInt()) {
+            System.out.println("Digite um número válido");
+            scanner.next();
+        }
+        int codigo = scanner.nextInt();
+        scanner.nextLine();
+        //Verificação se o livro existe dentro do array;
+        for (int i = 0; i < livros.length; i++) {
+            //Se o livro existir dentro do array, seguirá o protocolo especificado;
+            if (livros[i] != null && livros[i].getCodigo() == codigo) {
+                System.out.println("Deseja mesmo apagar o livro? (1 = Sim, 0 = Não)");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("Digite um número válido");
+                    scanner.next();
+                }
+                //Scanneia o inteiro submetido pelo usuario;
+                int opcao = scanner.nextInt();
+                scanner.nextLine();
+                //se a opção for correspondente a 1 (sim) seguira com o protocolo indicado;
+                if (opcao == 1) {
+                    //substituindo o livro na posição especifica por null
+                    livros[i] = null;
+                    System.out.println("Livro excluido com sucesso!");
+                    //Scanner esperando a tecla "Enter" ser pressionada para retornar ao menu;
+                    scanner.nextLine();
+                    //retorno para o menu;
+                    menu();
+                    return;
+                }
+                menu();
+                return;
+            }
+        }
+        System.out.println("Livro não encontrado!");
+        scanner.nextLine();
+        menu();
+    }
+
     public static void emprestarLivro(){
         //emprestar livro
         System.out.println("Emprestar livro");
@@ -133,7 +175,8 @@ public class Main {
                         System.out.println("Digite um código válido");
                         scanner.next();
                     }
-                    int codigo = Integer.parseInt(scanner.nextLine());
+                    int codigo = scanner.nextInt();
+                    scanner.nextLine();
                     //verificar se o código do livro já existe
                     if (getLivro(codigo) != null) {
                         System.out.println("Livro já cadastrado");
@@ -150,13 +193,15 @@ public class Main {
                         System.out.println("Digite um ano válido");
                         scanner.next();
                     }
-                    int anoPublicacao = Integer.parseInt(scanner.nextLine());
+                    int anoPublicacao = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.print("Digite o número de exemplares do livro: ");
                     while (!scanner.hasNextInt()) {
                         System.out.println("Digite um número válido");
                         scanner.next();
                     }
-                    int numExemplares = Integer.parseInt(scanner.nextLine());
+                    int numExemplares = scanner.nextInt();
+                    scanner.nextLine();
                     Livro livro = new Livro(codigo, titulo, autor, anoPublicacao, numExemplares);
                     if (livro != null) {
                         livros[i] = livro;
@@ -183,6 +228,7 @@ public class Main {
     public static void menu() {
         int menu = 1;
         //leiaute do menu
+        //"layout"
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
         System.out.println("| Sistema Gerenciador de biblioteca |");
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
@@ -190,7 +236,8 @@ public class Main {
         System.out.println("| 2 - Cadastrar novo emprestimo     |");
         System.out.println("| 3 - Cadastrar novo cliente        |");
         System.out.println("| 4 - Devolver livro                |");
-        System.out.println("| 5 - Relatorios...                 |");
+        System.out.println("| 5 - Excluir Livro                 |");
+        System.out.println("| 6 - Relatorios...                 |");
         System.out.println("| 0 - Sair                          |");
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
         do {
@@ -205,7 +252,12 @@ public class Main {
             switch (opcao) {
                 case 1:
                     System.out.println("Deseja cadastrar um novo livro?");
-                    int opc = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
+                    int opc = scanner.nextInt();
+                    scanner.nextLine();
                     if (opc == 1) {
                         cadastrarLivro();
                         return;
@@ -213,7 +265,12 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Deseja cadastrar um novo emprestimo?");
-                    int opc2 = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
+                    int opc2 = scanner.nextInt();
+                    scanner.nextLine();
                     if (opc2 == 1) {
                         emprestarLivro();
                         return;
@@ -228,6 +285,19 @@ public class Main {
                     menu = 0;
                     break;
                 case 5:
+                    System.out.println("Deseja excluir um livro?");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
+                    int opc5 = scanner.nextInt();
+                    scanner.nextLine();
+                    if (opc5 == 1) {
+                        excluirLivro();
+                        return;
+                    }
+                    break;
+                case 6:
                     System.out.println("Relatorios...");
                     menu = 0;
                     break;
