@@ -129,7 +129,12 @@ public class Main {
                 //cadastrar novo livro
                 try {
                     System.out.print("Digite o código do livro: ");
-                    int codigo = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um código válido");
+                        scanner.next();
+                    }
+                    int codigo = scanner.nextInt();
+                    scanner.nextLine();
                     //verificar se o código do livro já existe
                     if (getLivro(codigo) != null) {
                         System.out.println("Livro já cadastrado");
@@ -142,9 +147,19 @@ public class Main {
                     System.out.print("Digite o autor do livro: ");
                     String autor = scanner.nextLine();
                     System.out.print("Digite o ano de publicação do livro: ");
-                    int anoPublicacao = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um ano válido");
+                        scanner.next();
+                    }
+                    int anoPublicacao = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.print("Digite o número de exemplares do livro: ");
-                    int numExemplares = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
+                    int numExemplares = scanner.nextInt();
+                    scanner.nextLine();
                     Livro livro = new Livro(codigo, titulo, autor, anoPublicacao, numExemplares);
                     if (livro != null) {
                         livros[i] = livro;
@@ -193,7 +208,12 @@ public class Main {
             switch (opcao) {
                 case 1:
                     System.out.println("Deseja cadastrar um novo livro?");
-                    int opc = Integer.parseInt(scanner.nextLine());
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
+                    int opc = scanner.nextInt();
+                    scanner.nextLine();
                     if (opc == 1) {
                         cadastrarLivro();
                         return;
