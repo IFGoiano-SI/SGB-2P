@@ -1,46 +1,4 @@
-import classes.Cliente;
-import classes.Endereco;
-import classes.Livro;
 
-import java.util.Scanner;
-
-public class Main {
-
-    //array de 5 clientes
-    static Cliente[] clientes = new Cliente[5];
-    //array de 10 livros
-    static Livro[] livros = new Livro[10];
-
-    static Scanner scanner = new Scanner(System.in);
-
-    public static void main(String[] args) {
-
-        //exemplo de nenu de opções
-        while (true) {
-            System.out.println("\nSistema de Biblioteca");
-            System.out.println("1. Cadastrar Cliente");
-            System.out.println("2. Sair");
-            System.out.print("Escolha uma opção: ");
-            int opcao = 0;
-            try {
-                opcao = Integer.parseInt(scanner.nextLine()); //converte a entrada do usuário para int
-            } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Por favor, insira um número.");
-                continue; //se erro, volta ao menu
-            }
-
-            if (opcao == 1) {
-                cadastrarCliente(); //chama cadastro
-            } else if (opcao == 2) {
-                System.out.println("Saindo...");
-                break;
-            } else {
-                System.out.println("Opção inválida! Tente novamente.");
-            }
-        }
-    }
-
-    //CADASTRAR CLIENTE
     public static void cadastrarCliente() {
         System.out.println("\nCadastro de Cliente");
 
@@ -102,4 +60,4 @@ public class Main {
 
         System.out.println("Desculpe, não há espaço para mais clientes.");
     }
-}
+
