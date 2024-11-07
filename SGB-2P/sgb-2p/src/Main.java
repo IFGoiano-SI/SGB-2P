@@ -40,6 +40,10 @@ public class Main {
                 //cadastrar novo livro
                 try {
                     System.out.print("Digite o código do livro: ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um código válido");
+                        scanner.next();
+                    }
                     int codigo = Integer.parseInt(scanner.nextLine());
                     //verificar se o código do livro já existe
                     if (getLivro(codigo) != null) {
@@ -53,8 +57,16 @@ public class Main {
                     System.out.print("Digite o autor do livro: ");
                     String autor = scanner.nextLine();
                     System.out.print("Digite o ano de publicação do livro: ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um ano válido");
+                        scanner.next();
+                    }
                     int anoPublicacao = Integer.parseInt(scanner.nextLine());
                     System.out.print("Digite o número de exemplares do livro: ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Digite um número válido");
+                        scanner.next();
+                    }
                     int numExemplares = Integer.parseInt(scanner.nextLine());
                     Livro livro = new Livro(codigo, titulo, autor, anoPublicacao, numExemplares);
                     if (livro != null) {
