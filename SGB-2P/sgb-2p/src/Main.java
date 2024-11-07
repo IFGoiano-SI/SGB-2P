@@ -1,4 +1,4 @@
-import  classes.Endereco;
+import classes.Endereco;
 import classes.Cliente;
 import classes.Emprestimo;
 import classes.Livro;
@@ -25,7 +25,7 @@ public class Main {
         menu();
     }
 
-    public static Livro getLivro(int codigo){
+    public static Livro getLivro(int codigo) {
         for (Livro livro : livros) {
             //percorrer o array de livros e verificar se o livro existe, se existir retornar o livro
             if (livro != null && livro.getCodigo() == codigo) {
@@ -35,7 +35,7 @@ public class Main {
         return null;
     }
 
-    public static Cliente getCliente(String cpf){
+    public static Cliente getCliente(String cpf) {
         for (Cliente cliente : clientes) {
             //percorrer o array de clientes e verificar se o cliente existe, se existir retornar o cliente
             if (cliente != null && cliente.getCpf().equals(cpf)) {
@@ -45,7 +45,7 @@ public class Main {
         return null;
     }
 
-    public static Emprestimo getEmprestimo(Cliente cliente){
+    public static Emprestimo getEmprestimo(Cliente cliente) {
         for (Emprestimo emprestimo : emprestimos) {
             //percorrer o array de emprestimos e verificar se o emprestimo existe, se existir retornar o emprestimo
             if (emprestimo != null && emprestimo.getCliente().equals(cliente)) {
@@ -56,7 +56,7 @@ public class Main {
     }
 
     //Metodo para exclusão de livros;
-    public static void excluirLivro(){
+    public static void excluirLivro() {
         System.out.println("Digite o código do livro que deseja excluir: ");
         //Scanner esperando um inteiro ser submetido pelo usuario impedindo que o programa quebre;
         while (!scanner.hasNextInt()) {
@@ -97,7 +97,7 @@ public class Main {
         menu();
     }
 
-    public static void emprestarLivro(){
+    public static void emprestarLivro() {
         //emprestar livro
         System.out.println("Emprestar livro");
         System.out.print("Digite o código do livro: ");
@@ -142,19 +142,19 @@ public class Main {
         for (int i = 0; i < emprestimos.length; i++) {
             if (emprestimos[i] == null) {
                 Emprestimo novoEmprestimo = new Emprestimo(livro, cliente, dataEmp, dataDev);
-                if (novoEmprestimo != null) {
-                    emprestimos[i] = novoEmprestimo;
-                    for(Livro l : livros){
-                        if(l != null && l.getCodigo() == livro.getCodigo()){
-                            if(l.emprestar()){
-                                System.out.println("Livro emprestado com sucesso!");
-                            }else{
-                                System.out.println("Não foi possível emprestar o livro");
-                                emprestimos[i] = null;
-                            }
+
+                emprestimos[i] = novoEmprestimo;
+                for (Livro l : livros) {
+                    if (l != null && l.getCodigo() == livro.getCodigo()) {
+                        if (l.emprestar()) {
+                            System.out.println("Livro emprestado com sucesso!");
+                        } else {
+                            System.out.println("Não foi possível emprestar o livro");
+                            emprestimos[i] = null;
                         }
                     }
                 }
+
                 break;
             }
         }
@@ -203,12 +203,12 @@ public class Main {
                     int numExemplares = scanner.nextInt();
                     scanner.nextLine();
                     Livro livro = new Livro(codigo, titulo, autor, anoPublicacao, numExemplares);
-                    if (livro != null) {
-                        livros[i] = livro;
-                        System.out.println("Livro cadastrado com sucesso!");
-                    }
+
+                    livros[i] = livro;
+                    System.out.println("Livro cadastrado com sucesso!");
+
                     cadastrar = 0;
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("Não foi possivel cadastrar o livro");
                     scanner.nextLine();
                     menu();
@@ -241,7 +241,7 @@ public class Main {
         System.out.println("| 0 - Sair                          |");
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
         do {
-            int opcao = 0;
+            int opcao;
             System.out.print("Digite a opção desejada: ");
             while (!scanner.hasNextInt()) {
                 System.out.println("Digite um número válido");
