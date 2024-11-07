@@ -55,6 +55,38 @@ public class Main {
         return null;
     }
 
+    //Metodo para exclusão de livros;
+    public static void excluirLivro(){
+        System.out.println("Digite o código do livro que deseja excluir: ");
+        int codigo = scanner.nextInt();
+        //Verificação se o livro existe dentro do array;
+        for (int i = 0; i < livros.length; i++) {
+            //Se o livro existir dentro do array, seguirá o protocolo especificado;
+            if (livros[i] != null && livros[i].getCodigo() == codigo) {
+                System.out.println("Deseja mesmo apagar o livro? (1 = Sim, 0 = Não)");
+                //Scanneia o inteiro submetido pelo usuario;
+                int opcao = scanner.nextInt();
+                //se a opção for correspondente a 1 (sim) seguira com o protocolo indicado;
+                if (opcao == 1) {
+                    //substituindo o livro na posição especifica por null
+                    livros[i] = null;
+                    System.out.println("Livro excluido com sucesso!");
+                    //Scanner esperando a tecla "Enter" ser pressionada para retornar ao menu;
+                    scanner.nextLine();
+                    //retorno para o menu;
+                    menu();
+                    return;
+                }
+                menu();
+                return;
+            }
+        }
+        System.out.println("Livro não encontrado!");
+        scanner.nextLine();
+        menu();
+        return;
+    }
+
     public static void emprestarLivro(){
         //emprestar livro
         System.out.println("Emprestar livro");
@@ -186,6 +218,7 @@ public class Main {
     public static void menu() {
         int menu = 1;
         //leiaute do menu
+        //"layout"
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
         System.out.println("| Sistema Gerenciador de biblioteca |");
         System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
