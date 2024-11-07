@@ -55,6 +55,30 @@ public class Main {
         return null;
     }
 
+    public static void excluirLivro(){
+        System.out.println("Digite o código do livro que deseja excluir: ");
+        int codigo = scanner.nextInt();
+        for (int i = 0; i < livros.length; i++) {
+            if (livros[i] != null && livros[i].getCodigo() == codigo) {
+                System.out.println("Deseja mesmo apagar o livro? (1 = Sim, 0 = Não)");
+                int opcao = scanner.nextInt();
+                if (opcao == 1) {
+                    livros[i] = null;
+                    System.out.println("Livro excluido com sucesso!");
+                    scanner.nextLine();
+                    menu();
+                    return;
+                }
+                menu();
+                return;
+            }
+        }
+        System.out.println("Livro não encontrado!");
+        scanner.nextLine();
+        menu();
+        return;
+    }
+
     public static void emprestarLivro(){
         //emprestar livro
         System.out.println("Emprestar livro");
