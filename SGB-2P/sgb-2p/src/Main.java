@@ -1,11 +1,8 @@
 import classes.Cliente;
+import classes.Endereco;
 import classes.Livro;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
 import java.util.Scanner;
-
 
 public class Main {
 
@@ -17,127 +14,92 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        menu();
-    }
 
-    public static Livro getLivro(int codigo){
-        for (Livro livro : livros) {
-            //percorrer o array de livros e verificar se o livro existe, se existir retornar o livro
-            if (livro != null && livro.getCodigo() == codigo) {
-                return livro;
-            }
-        }
-        return null;
-    }
-
-    public static void cadastrarLivro() {
-        //cadastrar novo livro
-        System.out.println("Cadastrar novo livro");
-        //percorrer o array de livros e verificar se há espaço
-        int cadastrar = 1;
-        for (int i = 0; i < livros.length; i++) {
-            if (livros[i] == null) {
-                //cadastrar novo livro
-                try {
-                    System.out.print("Digite o código do livro: ");
-                    int codigo = Integer.parseInt(scanner.nextLine());
-                    //verificar se o código do livro já existe
-                    if (getLivro(codigo) != null) {
-                        System.out.println("Livro já cadastrado");
-                        scanner.nextLine();
-                        menu();
-                        return;
-                    }
-                    System.out.print("Digite o título do livro: ");
-                    String titulo = scanner.nextLine();
-                    System.out.print("Digite o autor do livro: ");
-                    String autor = scanner.nextLine();
-                    System.out.print("Digite o ano de publicação do livro: ");
-                    int anoPublicacao = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Digite o número de exemplares do livro: ");
-                    int numExemplares = Integer.parseInt(scanner.nextLine());
-                    Livro livro = new Livro(codigo, titulo, autor, anoPublicacao, numExemplares);
-                    if (livro != null) {
-                        livros[i] = livro;
-                        System.out.println("Livro cadastrado com sucesso!");
-                    }
-                    cadastrar = 0;
-                }catch (Exception e){
-                    System.out.println("Não foi possivel cadastrar o livro");
-                    scanner.nextLine();
-                    menu();
-                    return;
-                }
-                break;
-            }
-        }
-        if (cadastrar == 1) {
-            System.out.println("Não há espaço para cadastrar um novo livro");
-        }
-        scanner.nextLine();
-        menu();
-    }
-
-    //menu
-    public static void menu() {
-        int menu = 1;
-        //leiaute do menu
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
-        System.out.println("| Sistema Gerenciador de biblioteca |");
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
-        System.out.println("| 1 - Cadastrar novo livro          |");
-        System.out.println("| 2 - Cadastrar novo emprestimo     |");
-        System.out.println("| 3 - Cadastrar novo cliente        |");
-        System.out.println("| 4 - Devolver livro                |");
-        System.out.println("| 5 - Relatorios...                 |");
-        System.out.println("| 0 - Sair                          |");
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
-        do {
+        //exemplo de nenu de opções
+        while (true) {
+            System.out.println("\nSistema de Biblioteca");
+            System.out.println("1. Cadastrar Cliente");
+            System.out.println("2. Sair");
+            System.out.print("Escolha uma opção: ");
             int opcao = 0;
-            System.out.print("Digite a opção desejada: ");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Digite um número válido");
-                scanner.next();
+            try {
+                opcao = Integer.parseInt(scanner.nextLine()); //converte a entrada do usuário para int
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número.");
+                continue; //se erro, volta ao menu
             }
-            opcao = scanner.nextInt();
-            scanner.nextLine();
-            switch (opcao) {
-                case 1:
-                    System.out.println("Deseja cadastrar um novo livro?");
-                    int opc = Integer.parseInt(scanner.nextLine());
-                    if (opc == 1) {
-                        cadastrarLivro();
-                        return;
-                    }
-                    break;
-                case 2:
-                    System.out.println("Cadastrar novo emprestimo");
-                    menu = 0;
-                    break;
-                case 3:
-                    System.out.println("Cadastrar novo cliente");
-                    menu = 0;
-                    break;
-                case 4:
-                    System.out.println("Devolver livro");
-                    menu = 0;
-                    break;
-                case 5:
-                    System.out.println("Relatorios...");
-                    menu = 0;
-                    break;
-                case 9:
-                    System.out.println("Saindo...");
-                    System.exit(0);
-                    menu = 0;
-                    break;
-                default:
-                    System.out.println("Opção inválida");
-                    break;
-            }
-        } while (menu != 0);
 
+            if (opcao == 1) {
+                cadastrarCliente(); //chama cadastro
+            } else if (opcao == 2) {
+                System.out.println("Saindo...");
+                break;
+            } else {
+                System.out.println("Opção inválida! Tente novamente.");
+            }
+        }
     }
 
+    //CADASTRAR CLIENTE
+    public static void cadastrarCliente() {
+        System.out.println("\nCadastro de Cliente");
 
+        //coletando dados do cliente
+        System.out.print("Digite o nome do cliente: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
+
+        System.out.print("Digite o telefone do cliente: ");
+        String telefone = scanner.nextLine();
+
+        //coletando informações de endereço
+        System.out.print("Digite a rua do endereço: ");
+        String rua = scanner.nextLine();
+
+        System.out.print("Digite o bairro do endereço: ");
+        String bairro = scanner.nextLine();
+
+        System.out.print("Digite a cidade do endereço: ");
+        String cidade = scanner.nextLine();
+
+        System.out.print("Digite o estado do endereço: ");
+        String estado = scanner.nextLine();
+
+        System.out.print("Digite o CEP do endereço (somente números): ");
+        String cep = scanner.nextLine();
+
+        int numero = 0;
+        boolean numeroValido = false;
+
+        //laço para garantir que o número do endereço seja válido
+        while (!numeroValido) {
+            try {
+                System.out.print("Digite o número do endereço: ");
+                numero = Integer.parseInt(scanner.nextLine());  //TEnta converter para int
+                numeroValido = true; //se não ocorrer erro, sai do loop
+            } catch (NumberFormatException e) {
+                System.out.println("Número inválido. Por favor, insira um número inteiro.");
+            }
+        }
+
+        //cria objeto Endereco
+        Endereco endereco = new Endereco(rua, bairro, cidade, estado, cep, numero);
+
+        //cria o objeto Cliente
+        Cliente cliente = new Cliente(nome, cpf, telefone, endereco);
+
+        //procurando o primeiro índice vazio para armazenar o cliente
+        for (int i = 0; i < clientes.length; i++) {
+            if (clientes[i] == null) {
+                clientes[i] = cliente;
+                System.out.println("Cliente cadastrado com sucesso!");
+                System.out.println(cliente.toString()); //exibe os dados do cliente cadastrado
+                return; //retorna após o cadastro
+            }
+        }
+
+        System.out.println("Desculpe, não há espaço para mais clientes.");
+    }
 }
