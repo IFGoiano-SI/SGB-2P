@@ -7,10 +7,24 @@ public class Cliente {
     private Endereco endereco;
 
     public Cliente(String nome, String cpf, String telefone, Endereco endereco) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.telefone = telefone;
-        this.endereco = endereco;
+        try {
+            if (nome == null || nome.isEmpty()) {
+                throw new IllegalArgumentException("Nome não pode ser vazio");
+            }
+            if (cpf == null || cpf.isEmpty()) {
+                throw new IllegalArgumentException("CPF não pode ser vazio");
+            }
+            if (telefone == null || telefone.isEmpty()) {
+                throw new IllegalArgumentException("Telefone não pode ser vazio");
+            }
+
+            this.nome = nome;
+            this.cpf = cpf;
+            this.telefone = telefone;
+            this.endereco = endereco;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro no construtor: " + e.getMessage());
+        }
     }
 
     // Getters e setters para os atributos
@@ -19,7 +33,14 @@ public class Cliente {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        try {
+            if (nome == null || nome.isEmpty()) {
+                throw new IllegalArgumentException("Nome não pode ser vazio");
+            }
+            this.nome = nome;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao definir nome: " + e.getMessage());
+        }
     }
 
     public String getCpf() {
@@ -27,7 +48,14 @@ public class Cliente {
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        try {
+            if (cpf == null || cpf.isEmpty()) {
+                throw new IllegalArgumentException("CPF não pode ser vazio");
+            }
+            this.cpf = cpf;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao definir CPF: " + e.getMessage());
+        }
     }
 
     public String getTelefone() {
@@ -35,7 +63,14 @@ public class Cliente {
     }
 
     public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        try {
+            if (telefone == null || telefone.isEmpty()) {
+                throw new IllegalArgumentException("Telefone não pode ser vazio");
+            }
+            this.telefone = telefone;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro ao definir telefone: " + e.getMessage());
+        }
     }
 
     public Endereco getEndereco() {
@@ -44,7 +79,5 @@ public class Cliente {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
-    }
-
     }
 }
