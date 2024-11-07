@@ -26,7 +26,11 @@ public class Livro {
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        try {
+            this.titulo = titulo;
+        } catch (Exception e) {
+            System.out.println("Erro ao definir o título: " + e.getMessage());
+        }
     }
 
     public String getAutor() {
@@ -34,7 +38,11 @@ public class Livro {
     }
 
     public void setAutor(String autor) {
-        this.autor = autor;
+        try {
+            this.autor = autor;
+        } catch (Exception e) {
+            System.out.println("Erro ao definir o autor: " + e.getMessage());
+        }
     }
 
     public int getAnoPublicacao() {
@@ -42,7 +50,11 @@ public class Livro {
     }
 
     public void setAnoPublicacao(int anoPublicacao) {
-        this.anoPublicacao = anoPublicacao;
+        try {
+            this.anoPublicacao = anoPublicacao;
+        } catch (Exception e) {
+            System.out.println("Erro ao definir o ano de publicação: " + e.getMessage());
+        }
     }
 
     public int getNumExemplares() {
@@ -50,8 +62,12 @@ public class Livro {
     }
 
     public void setNumExemplares(int numExemplares) {
-        this.numExemplares = numExemplares;
-        this.exemplaresDisponiveis = numExemplares;
+        try {
+            this.numExemplares = numExemplares;
+            this.exemplaresDisponiveis = numExemplares;
+        } catch (Exception e) {
+            System.out.println("Erro ao definir o número de exemplares: " + e.getMessage());
+        }
     }
 
     public int getExemplaresDisponiveis() {
@@ -59,28 +75,46 @@ public class Livro {
     }
 
     public String getDadosLivro() {
-        String retorno = "Título: " + this.titulo + "\n";
-        retorno += "Autor: " + this.autor + "\n";
-        retorno += "Ano de Publicação: " + this.anoPublicacao + "\n";
-        retorno += "Número de Exemplares: " + this.numExemplares + "\n";
-        retorno += "Exemplares Disponíveis: " + this.exemplaresDisponiveis + "\n";
-        return retorno;
+        try {
+            String retorno = "Título: " + this.titulo + "\n";
+            retorno += "Autor: " + this.autor + "\n";
+            retorno += "Ano de Publicação: " + this.anoPublicacao + "\n";
+            retorno += "Número de Exemplares: " + this.numExemplares + "\n";
+            retorno += "Exemplares Disponíveis: " + this.exemplaresDisponiveis + "\n";
+            return retorno;
+        } catch (Exception e) {
+            System.out.println("Erro ao obter os dados do livro: " + e.getMessage());
+            return null;
+        }
     }
 
     public boolean emprestar() {
-        if (this.exemplaresDisponiveis > 0) {
-            this.exemplaresDisponiveis--;
-            return true;
-        } else {
+        try {
+            if (this.exemplaresDisponiveis > 0) {
+                this.exemplaresDisponiveis--;
+                return true;
+            } else {
+                System.out.println("Nenhum exemplar disponível para empréstimo.");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao realizar o empréstimo: " + e.getMessage());
             return false;
         }
     }
 
-    public boolean devolver() {
-        if (this.exemplaresDisponiveis < this.numExemplares) {
-            this.exemplaresDisponiveis++;
-            return true;
-        } else {
+    public boolean devolverLivro() {
+        try {
+            if (this.exemplaresDisponiveis < this.numExemplares) {
+                this.exemplaresDisponiveis++;
+                System.out.println("Livro devolvido com sucesso.");
+                return true;
+            } else {
+                System.out.println("Todos os exemplares já estão disponíveis.");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao realizar a devolução: " + e.getMessage());
             return false;
         }
     }
