@@ -7,14 +7,14 @@ import classes.Relatorio;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 
 public class Main {
-    private static ArrayList<Cliente> clientes = new ArrayList<>(); // Apenas o ArrayList de clientes
+    //array de 10 clientes
+    static Cliente[] clientes = new Cliente[10];
 
     //array de 10 livros
     static Livro[] livros = new Livro[10];
@@ -391,8 +391,9 @@ public class Main {
             System.out.println("| 3 - Cadastrar novo cliente        |");
             System.out.println("| 4 - Devolver livro                |");
             System.out.println("| 5 - Excluir Livro                 |");
-            System.out.println("| 6 - Relatorios...                 |");
-            System.out.println("| 7 - Exportar .csv...              |");
+            System.out.println("| 6 - Excluir Cliente               |");
+            System.out.println("| 7 - Relatorios...                 |");
+            System.out.println("| 8 - Exportar .csv...              |");
             System.out.println("| 0 - Sair                          |");
             System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
             int opcao;
@@ -461,6 +462,10 @@ public class Main {
                     }
                     break;
                 case 6:
+                    System.out.println("Excluir livro");
+                    removerCliente();
+                    break;
+                case 7:
                     System.out.println("Relatorios...");
                     try{
                         Relatorio.exibirMenuRelatorio(clientes, livros, emprestimos);
@@ -470,7 +475,7 @@ public class Main {
                         menu();
                     }
                     break;
-                case 7:
+                case 8:
                     System.out.println("Exportar CSV");
                     exportarCSV();
                     return;
@@ -495,6 +500,9 @@ public class Main {
 
         // Procurar o cliente pelo CPF
         for (Cliente cliente : clientes) {
+            if (cliente == null) {
+                continue;
+            }
             if (cliente.getCpf().equals(cpf)) {
                 clienteEncontrado = cliente;
                 break;
@@ -507,7 +515,12 @@ public class Main {
 
             if (confirmacao.equalsIgnoreCase("S")) {
                 // Remover o cliente da lista
-                clientes.remove(clienteEncontrado);
+                for (int i = 0; i < clientes.length; i++) {
+                    if (clientes[i] != null && clientes[i].getCpf().equals(cpf)) {
+                        clientes[i] = null;
+                        break;
+                    }
+                }
                 System.out.println("Cliente removido com sucesso!");
             } else {
                 System.out.println("Operação cancelada.");
@@ -515,6 +528,7 @@ public class Main {
         } else {
             System.out.println("Cliente não encontrado.");
         }
+        scanner.nextLine();
     }
 
 }   
