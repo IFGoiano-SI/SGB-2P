@@ -13,6 +13,7 @@ public class Emprestimo {
         this.data_emp = data_emp;
         this.data_dev = data_dev;
     }
+
     //metódo get para acessar as informações do livro
     public Livro getLivro() {
         return this.livro;
@@ -30,8 +31,9 @@ public class Emprestimo {
 
     //metódo get para acessar as informações da data de devolução
     public String getData_dev() {
-            return this.data_dev;
+        return this.data_dev;
     }
+
     //Sobreescrita do metódo toString, para que ele retorne as informações do empréstimo
     @Override
     public String toString() {
