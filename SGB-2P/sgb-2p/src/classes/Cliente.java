@@ -80,4 +80,20 @@ public class Cliente {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    @Override
+    public String toString() {
+        //metodo toString com quebra de linha
+        return "Nome: " + this.nome + "\n" +
+                "CPF: " + this.cpf + "\n" +
+                "Telefone: " + this.telefone + "\n" +
+                "Endereço: " + this.endereco.toString() + "\n";
+    }
+    public String toString(char separador) {
+        //metodo toString com separador opcional
+        return "Nome: " + this.nome + separador +
+                "CPF: " + this.cpf + separador +
+                "Telefone: " + this.telefone + separador +
+                "Endereço: " + this.endereco.toString(separador) + separador;
+    }
 }

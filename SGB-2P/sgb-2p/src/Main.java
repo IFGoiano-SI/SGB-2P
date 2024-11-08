@@ -2,7 +2,13 @@ import classes.Endereco;
 import classes.Cliente;
 import classes.Emprestimo;
 import classes.Livro;
+import classes.Relatorio;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -18,10 +24,6 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        //inicializar o sistema
-        Endereco end = new Endereco("Rua 1", "Bairro 1", "Cidade 1", "Estado 1", "76350000", 743);
-        Cliente cliente = new Cliente("Cliente 1", "12345678901", "123456789", end);
-        clientes[0] = cliente;
         menu();
     }
 
@@ -229,23 +231,170 @@ public class Main {
         menu();
     }
 
+    //CADASTRAR CLIENTE
+    public static void cadastrarCliente() {
+        try {
+            System.out.println("\nCadastro de Cliente");
+            //coletando dados do cliente
+            System.out.print("Digite o nome do cliente: ");
+            String nome = scanner.nextLine();
+
+            System.out.print("Digite o CPF do cliente: ");
+            String cpf = scanner.nextLine();
+
+            System.out.print("Digite o telefone do cliente: ");
+            String telefone = scanner.nextLine();
+
+            //coletando informações de endereço
+            System.out.print("Digite a rua do endereço: ");
+            String rua = scanner.nextLine();
+
+            System.out.print("Digite o bairro do endereço: ");
+            String bairro = scanner.nextLine();
+
+            System.out.print("Digite a cidade do endereço: ");
+            String cidade = scanner.nextLine();
+
+            System.out.print("Digite o estado do endereço: ");
+            String estado = scanner.nextLine();
+
+            System.out.print("Digite o CEP do endereço (somente números): ");
+            String cep = scanner.nextLine();
+
+            int numero = 0;
+            boolean numeroValido = false;
+
+            //laço para garantir que o número do endereço seja válido
+            while (!numeroValido) {
+                try {
+                    System.out.print("Digite o número do endereço: ");
+                    numero = Integer.parseInt(scanner.nextLine());  //TEnta converter para int
+                    numeroValido = true; //se não ocorrer erro, sai do loop
+                } catch (NumberFormatException e) {
+                    System.out.println("Número inválido. Por favor, insira um número inteiro.");
+                }
+            }
+
+            //cria objeto Endereco
+            Endereco endereco = new Endereco(rua, bairro, cidade, estado, cep, numero);
+
+            //cria o objeto Cliente
+            Cliente cliente = new Cliente(nome, cpf, telefone, endereco);
+
+            //procurando o primeiro índice vazio para armazenar o cliente
+            for (int i = 0; i < clientes.length; i++) {
+                if (clientes[i] == null) {
+                    clientes[i] = cliente;
+                    System.out.println("Cliente cadastrado com sucesso!");
+                    System.out.println(cliente.toString()); //exibe os dados do cliente cadastrado
+                    scanner.nextLine();
+                    menu();
+                    return;
+                }
+            }
+
+            System.out.println("Desculpe, não há espaço para mais clientes.");
+        } catch (Exception e) {
+            System.out.println("Não foi possível cadastrar o cliente");
+            scanner.nextLine();
+            menu();
+        }
+    }
+
+    public static void exportarCSV() {
+        try {
+            //exportar todos os arrays para um arquivo CSV separado por ; e com quebra de linha
+            //exemplo:
+            //Livros
+            //codigo;titulo;autor;anoPublicacao;numExemplares
+            //1;titulo1;autor1;2021;10
+            //2;titulo2;autor2;2020;5
+            //Clientes
+            //nome;cpf;telefone;endereco
+            //cliente1;12345678901;123456789;rua1;bairro1;cidade1;estado1;cep1;numero1
+            //cliente2;12345678902;123456789;rua2;bairro2;cidade2;estado2;cep2;numero2
+            //Emprestimos
+            //livro;cliente;data_emp;data_dev
+            //1;cliente1;2021-01-01;2021-01-15
+            //2;cliente2;2021-01-02;2021-01-16
+
+            //pegar a data atual para adicionar no nome do arquivo
+            //exemplo: 2021-01-01.csv
+            //criar um arquivo com o nome da data atual
+
+            LocalDate hoje = LocalDate.now();
+            String nomeArquivo = "exportar-dados-"+hoje.toString() + ".csv";
+            File arquivo = new File(nomeArquivo);
+            //escrever no arquivo
+            FileWriter fileWriter = new FileWriter(arquivo);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            //escrever os livros
+            bufferedWriter.write("Livros;");
+            bufferedWriter.newLine();
+            bufferedWriter.write("codigo;titulo;autor;anoPublicacao;numExemplares;");
+            bufferedWriter.newLine();
+            for (Livro livro : livros) {
+                if (livro != null) {
+                    bufferedWriter.write(livro.getCodigo() + ";" + livro.getTitulo() + ";" + livro.getAutor() + ";" + livro.getAnoPublicacao() + ";" + livro.getNumExemplares()+";");
+                    bufferedWriter.newLine();
+                }
+            }
+            //escrever os clientes
+            bufferedWriter.write("Clientes;");
+            bufferedWriter.newLine();
+            bufferedWriter.write("nome;cpf;telefone;endereco;");
+            bufferedWriter.newLine();
+            for (Cliente cliente : clientes) {
+                if (cliente != null) {
+                    bufferedWriter.write(cliente.getNome() + ";" + cliente.getCpf() + ";" + cliente.getTelefone() + ";" + cliente.getEndereco().toString(' ') + ";");
+                    bufferedWriter.newLine();
+                }
+            }
+
+            //escrever os emprestimos
+            bufferedWriter.write("Emprestimos");
+            bufferedWriter.newLine();
+            bufferedWriter.write("livro;cliente;data_emp;data_dev");
+            bufferedWriter.newLine();
+            for (Emprestimo emprestimo : emprestimos) {
+                if (emprestimo != null) {
+                    bufferedWriter.write(emprestimo.getLivro().getCodigo() + ";" + emprestimo.getCliente().getCpf() + ";" + emprestimo.getData_emp() + ";" + emprestimo.getData_dev());
+                    bufferedWriter.newLine();
+                }
+            }
+            bufferedWriter.close();
+            System.out.println("Arquivo exportado com sucesso!");
+            scanner.nextLine();
+            menu();
+        } catch (IOException e) {
+            System.out.println("Erro ao exportar arquivo");
+            scanner.nextLine();
+            menu();
+        } catch (Exception e) {
+            System.out.println("Erro ao exportar arquivo");
+            scanner.nextLine();
+            menu();
+        }
+    }
+
     //menu
     public static void menu() {
         int menu = 1;
         //leiaute do menu
         //"layout"
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
-        System.out.println("| Sistema Gerenciador de biblioteca |");
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
-        System.out.println("| 1 - Cadastrar novo livro          |");
-        System.out.println("| 2 - Cadastrar novo emprestimo     |");
-        System.out.println("| 3 - Cadastrar novo cliente        |");
-        System.out.println("| 4 - Devolver livro                |");
-        System.out.println("| 5 - Excluir Livro                 |");
-        System.out.println("| 6 - Relatorios...                 |");
-        System.out.println("| 0 - Sair                          |");
-        System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
         do {
+            System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
+            System.out.println("| Sistema Gerenciador de biblioteca |");
+            System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
+            System.out.println("| 1 - Cadastrar novo livro          |");
+            System.out.println("| 2 - Cadastrar novo emprestimo     |");
+            System.out.println("| 3 - Cadastrar novo cliente        |");
+            System.out.println("| 4 - Devolver livro                |");
+            System.out.println("| 5 - Excluir Livro                 |");
+            System.out.println("| 6 - Relatorios...                 |");
+            System.out.println("| 7 - Exportar .csv...              |");
+            System.out.println("| 0 - Sair                          |");
+            System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
             int opcao;
             System.out.print("Digite a opção desejada: ");
             while (!scanner.hasNextInt()) {
@@ -282,8 +431,17 @@ public class Main {
                     }
                     break;
                 case 3:
-                    System.out.println("Cadastrar novo cliente");
-                    menu = 0;
+                    System.out.println("Deseja cadastrar um novo cliente?");
+                    while (!scanner.hasNextInt()) {
+                        System.out.print("Digite um número válido: ");
+                        scanner.next();
+                    }
+                    int opc3 = scanner.nextInt();
+                    scanner.nextLine();
+                    if (opc3 == 1) {
+                        cadastrarCliente();
+                        return;
+                    }
                     break;
                 case 4:
                     System.out.println("Devolver livro");
@@ -304,8 +462,18 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Relatorios...");
-                    menu = 0;
+                    try{
+                        Relatorio.exibirMenuRelatorio(clientes, livros, emprestimos);
+                    }catch (Exception e){
+                        System.out.println("Erro ao exibir relatórios!");
+                        scanner.nextLine();
+                        menu();
+                    }
                     break;
+                case 7:
+                    System.out.println("Exportar CSV");
+                    exportarCSV();
+                    return;
                 case 9:
                     System.out.println("Saindo...");
                     System.exit(0);
