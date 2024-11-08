@@ -88,6 +88,20 @@ public class Livro {
         }
     }
 
+    public String toString(String delimitador) {
+        try {
+            return "Código: " + codigo + delimitador +
+                    "Título: " + titulo + delimitador +
+                    "Autor: " + autor + delimitador +
+                    "Ano de Publicação: " + anoPublicacao + delimitador +
+                    "Número de Exemplares: " + numExemplares + delimitador +
+                    "Exemplares Disponíveis: " + exemplaresDisponiveis;
+        } catch (Exception e) {
+            System.out.println("Erro ao exportar os dados do livro: " + e.getMessage());
+            return null;
+        }
+    }
+
     public boolean emprestar() {
         try {
             if (this.exemplaresDisponiveis > 0) {
