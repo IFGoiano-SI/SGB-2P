@@ -40,6 +40,9 @@ public class Endereco {
                 "Número: " + this.numero + "\n" +
                 (this.complemento != null ? "Complemento: " + this.complemento + "\n" : "");
     }
+    public String toString(char separador) {
+        return this.rua + separador + this.bairro + separador + this.cidade + separador + this.estado + separador + this.cep + separador + this.numero + separador + (this.complemento != null ? this.complemento : "");
+    }
 
 
     public Boolean setCep(String cep) {
