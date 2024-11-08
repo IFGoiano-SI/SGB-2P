@@ -71,7 +71,7 @@ public class Main {
             if (livros[i] != null && livros[i].getCodigo() == codigo) {
                 System.out.println("Deseja mesmo apagar o livro? (1 = Sim, 0 = Não)");
                 while (!scanner.hasNextInt()) {
-                    System.out.println("Digite um número válido");
+                    System.out.print("Digite um número válido: ");
                     scanner.next();
                 }
                 //Scanneia o inteiro submetido pelo usuario;
@@ -101,16 +101,21 @@ public class Main {
         //emprestar livro
         System.out.println("Emprestar livro");
         System.out.print("Digite o código do livro: ");
-        int codigo = Integer.parseInt(scanner.nextLine());
+        while (!scanner.hasNextInt()) {
+            System.out.print("Digite um código válido: ");
+            scanner.next();
+        }
+        int codigo = scanner.nextInt();
+        scanner.nextLine();
         Livro livro = getLivro(codigo);
         if (livro == null) {
-            System.out.println("Livro não encontrado");
+            System.out.println("Livro não encontrado!");
             scanner.nextLine();
             menu();
             return;
         }
         if (livro.getNumExemplares() == 0) {
-            System.out.println("Livro indisponível");
+            System.out.println("Livro indisponível!");
             scanner.nextLine();
             menu();
             return;
@@ -119,7 +124,7 @@ public class Main {
         String cpf = scanner.nextLine();
         Cliente cliente = getCliente(cpf);
         if (cliente == null) {
-            System.out.println("Cliente não encontrado");
+            System.out.println("Cliente não encontrado!");
             scanner.nextLine();
             menu();
             return;
@@ -128,7 +133,7 @@ public class Main {
         //verificar se o cliente já possui um emprestimo
         Emprestimo emprestimo = getEmprestimo(cliente);
         if (emprestimo != null) {
-            System.out.println("Cliente já possui um emprestimo");
+            System.out.println("Cliente já possui um emprestimo!");
             scanner.nextLine();
             menu();
             return;
@@ -244,7 +249,7 @@ public class Main {
             int opcao;
             System.out.print("Digite a opção desejada: ");
             while (!scanner.hasNextInt()) {
-                System.out.println("Digite um número válido");
+                System.out.print("Digite um número válido: ");
                 scanner.next();
             }
             opcao = scanner.nextInt();
@@ -253,7 +258,7 @@ public class Main {
                 case 1:
                     System.out.println("Deseja cadastrar um novo livro?");
                     while (!scanner.hasNextInt()) {
-                        System.out.println("Digite um número válido");
+                        System.out.print("Digite um número válido: ");
                         scanner.next();
                     }
                     int opc = scanner.nextInt();
@@ -266,7 +271,7 @@ public class Main {
                 case 2:
                     System.out.println("Deseja cadastrar um novo emprestimo?");
                     while (!scanner.hasNextInt()) {
-                        System.out.println("Digite um número válido");
+                        System.out.print("Digite um número válido: ");
                         scanner.next();
                     }
                     int opc2 = scanner.nextInt();
@@ -287,7 +292,7 @@ public class Main {
                 case 5:
                     System.out.println("Deseja excluir um livro?");
                     while (!scanner.hasNextInt()) {
-                        System.out.println("Digite um número válido");
+                        System.out.print("Digite um número válido: ");
                         scanner.next();
                     }
                     int opc5 = scanner.nextInt();
