@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 
 public class Main {
+    //array de 10 clientes
+    static Cliente[] clientes = new Cliente[10];
 
-    //array de 5 clientes
-    static Cliente[] clientes = new Cliente[5];
     //array de 10 livros
     static Livro[] livros = new Livro[10];
 
@@ -391,8 +391,9 @@ public class Main {
             System.out.println("| 3 - Cadastrar novo cliente        |");
             System.out.println("| 4 - Devolver livro                |");
             System.out.println("| 5 - Excluir Livro                 |");
-            System.out.println("| 6 - Relatorios...                 |");
-            System.out.println("| 7 - Exportar .csv...              |");
+            System.out.println("| 6 - Excluir Cliente               |");
+            System.out.println("| 7 - Relatorios...                 |");
+            System.out.println("| 8 - Exportar .csv...              |");
             System.out.println("| 0 - Sair                          |");
             System.out.println("|=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=|");
             int opcao;
@@ -461,6 +462,10 @@ public class Main {
                     }
                     break;
                 case 6:
+                    System.out.println("Excluir livro");
+                    removerCliente();
+                    break;
+                case 7:
                     System.out.println("Relatorios...");
                     try{
                         Relatorio.exibirMenuRelatorio(clientes, livros, emprestimos);
@@ -470,7 +475,7 @@ public class Main {
                         menu();
                     }
                     break;
-                case 7:
+                case 8:
                     System.out.println("Exportar CSV");
                     exportarCSV();
                     return;
@@ -488,4 +493,42 @@ public class Main {
     }
 
 
-}
+    public static void removerCliente() {
+        System.out.print("Digite o CPF do cliente que deseja remover: ");
+        String cpf = scanner.nextLine();
+        Cliente clienteEncontrado = null;
+
+        // Procurar o cliente pelo CPF
+        for (Cliente cliente : clientes) {
+            if (cliente == null) {
+                continue;
+            }
+            if (cliente.getCpf().equals(cpf)) {
+                clienteEncontrado = cliente;
+                break;
+            }
+        }
+
+        if (clienteEncontrado != null) {
+            System.out.print("Deseja realmente remover o cliente " + clienteEncontrado.getNome() + "? (S/N): ");
+            String confirmacao = scanner.nextLine();
+
+            if (confirmacao.equalsIgnoreCase("S")) {
+                // Remover o cliente da lista
+                for (int i = 0; i < clientes.length; i++) {
+                    if (clientes[i] != null && clientes[i].getCpf().equals(cpf)) {
+                        clientes[i] = null;
+                        break;
+                    }
+                }
+                System.out.println("Cliente removido com sucesso!");
+            } else {
+                System.out.println("Operação cancelada.");
+            }
+        } else {
+            System.out.println("Cliente não encontrado.");
+        }
+        scanner.nextLine();
+    }
+
+}   
