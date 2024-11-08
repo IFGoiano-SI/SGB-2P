@@ -1,83 +1,44 @@
 package classes;
 
-public class Cliente {
-    private String nome;
-    private String cpf;
-    private String telefone;
-    private Endereco endereco;
+public class Emprestimo {
+    private Livro livro;
+    private Cliente cliente;
+    private String data_emp;
+    private String data_dev;
 
-    public Cliente(String nome, String cpf, String telefone, Endereco endereco) {
-        try {
-            if (nome == null || nome.isEmpty()) {
-                throw new IllegalArgumentException("Nome não pode ser vazio");
-            }
-            if (cpf == null || cpf.isEmpty()) {
-                throw new IllegalArgumentException("CPF não pode ser vazio");
-            }
-            if (telefone == null || telefone.isEmpty()) {
-                throw new IllegalArgumentException("Telefone não pode ser vazio");
-            }
-
-            this.nome = nome;
-            this.cpf = cpf;
-            this.telefone = telefone;
-            this.endereco = endereco;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro no construtor: " + e.getMessage());
-        }
+    //Construtor utilizado para garantir que todos os atributos essenciais sejam declarados;
+    public Emprestimo(Livro livro, Cliente cliente, String data_emp, String data_dev) {
+        this.livro = livro;
+        this.cliente = cliente;
+        this.data_emp = data_emp;
+        this.data_dev = data_dev;
+    }
+    //metódo get para acessar as informações do livro
+    public Livro getLivro() {
+        return this.livro;
     }
 
-    // Getters e setters para os atributos
-    public String getNome() {
-        return nome;
+    //metódo get para acessar as informações do Cliente
+    public Cliente getCliente() {
+        return this.cliente;
     }
 
-    public void setNome(String nome) {
-        try {
-            if (nome == null || nome.isEmpty()) {
-                throw new IllegalArgumentException("Nome não pode ser vazio");
-            }
-            this.nome = nome;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao definir nome: " + e.getMessage());
-        }
+    //metódo get para acessar as informações da data de empréstimo
+    public String getData_emp() {
+        return this.data_emp;
     }
 
-    public String getCpf() {
-        return cpf;
+    //metódo get para acessar as informações da data de devolução
+    public String getData_dev() {
+            return this.data_dev;
+    }
+    //Sobreescrita do metódo toString, para que ele retorne as informações do empréstimo
+    @Override
+    public String toString() {
+        return "Livro: " + this.livro + "\n" +
+                "Cliente: " + this.cliente + "\n" +
+                "Data de empréstimo: " + this.data_emp + "\n" +
+                "Data de devolução" + this.data_dev + "\n";
     }
 
-    public void setCpf(String cpf) {
-        try {
-            if (cpf == null || cpf.isEmpty()) {
-                throw new IllegalArgumentException("CPF não pode ser vazio");
-            }
-            this.cpf = cpf;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao definir CPF: " + e.getMessage());
-        }
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        try {
-            if (telefone == null || telefone.isEmpty()) {
-                throw new IllegalArgumentException("Telefone não pode ser vazio");
-            }
-            this.telefone = telefone;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro ao definir telefone: " + e.getMessage());
-        }
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
 }
