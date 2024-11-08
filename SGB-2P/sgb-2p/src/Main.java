@@ -7,15 +7,15 @@ import classes.Relatorio;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
 
 public class Main {
+    private static ArrayList<Cliente> clientes = new ArrayList<>(); // Apenas o ArrayList de clientes
 
-    //array de 5 clientes
-    static Cliente[] clientes = new Cliente[5];
     //array de 10 livros
     static Livro[] livros = new Livro[10];
 
@@ -488,4 +488,33 @@ public class Main {
     }
 
 
-}
+    public static void removerCliente() {
+        System.out.print("Digite o CPF do cliente que deseja remover: ");
+        String cpf = scanner.nextLine();
+        Cliente clienteEncontrado = null;
+
+        // Procurar o cliente pelo CPF
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().equals(cpf)) {
+                clienteEncontrado = cliente;
+                break;
+            }
+        }
+
+        if (clienteEncontrado != null) {
+            System.out.print("Deseja realmente remover o cliente " + clienteEncontrado.getNome() + "? (S/N): ");
+            String confirmacao = scanner.nextLine();
+
+            if (confirmacao.equalsIgnoreCase("S")) {
+                // Remover o cliente da lista
+                clientes.remove(clienteEncontrado);
+                System.out.println("Cliente removido com sucesso!");
+            } else {
+                System.out.println("Operação cancelada.");
+            }
+        } else {
+            System.out.println("Cliente não encontrado.");
+        }
+    }
+
+}   
