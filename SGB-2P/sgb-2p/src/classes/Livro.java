@@ -108,7 +108,6 @@ public class Livro {
                 this.exemplaresDisponiveis--;
                 return true;
             } else {
-                System.out.println("Nenhum exemplar disponível para empréstimo.");
                 return false;
             }
         } catch (Exception e) {
@@ -121,10 +120,8 @@ public class Livro {
         try {
             if (this.exemplaresDisponiveis < this.numExemplares) {
                 this.exemplaresDisponiveis++;
-                System.out.println("Livro devolvido com sucesso.");
                 return true;
             } else {
-                System.out.println("Todos os exemplares já estão disponíveis.");
                 return false;
             }
         } catch (Exception e) {
