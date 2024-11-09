@@ -145,7 +145,6 @@ public class Main {
         String dataEmp = scanner.nextLine();
         System.out.print("Digite a data de devolução: ");
         String dataDev = scanner.nextLine();
-        scanner.nextLine();
         for (int i = 0; i < emprestimos.length; i++) {
             if (emprestimos[i] == null) {
                 Emprestimo novoEmprestimo = new Emprestimo(livro, cliente, dataEmp, dataDev);
@@ -161,10 +160,10 @@ public class Main {
                         }
                     }
                 }
-
                 break;
             }
         }
+        scanner.nextLine();
         menu();
     }
 
@@ -196,13 +195,15 @@ public class Main {
                     menu();
                     return;
                 }
-                for (Emprestimo emprestimo : emprestimos) {
-                    if (emprestimo != null && emprestimo.getLivro().getCodigo() == livro.getCodigo()) {
+                for (int i = 0; i < emprestimos.length; i++) {
+                    if (emprestimos[i] != null && emprestimos[i].getLivro().getCodigo() == livro.getCodigo()) {
                         for (Livro l : livros) {
                             if (l != null && l.getCodigo() == livro.getCodigo()) {
                                 if (l.devolverLivro()) {
                                     System.out.println("Livro devolvido com sucesso!");
-                                    emprestimo = null;
+                                    emprestimos[i] = null;
+                                    menu();
+                                    return;
                                 } else {
                                     System.out.println("Não foi possível devolver o livro");
                                 }
@@ -210,6 +211,9 @@ public class Main {
                         }
                     }
                 }
+                System.out.println("Livro não possui empréstimos");
+                scanner.nextLine();
+                menu();
                 break;
             case 2:
                 System.out.print("Digite o CPF do cliente: ");
@@ -221,13 +225,15 @@ public class Main {
                     menu();
                     return;
                 }
-                for (Emprestimo emprestimo : emprestimos) {
-                    if (emprestimo != null && emprestimo.getCliente().getCpf().equals(cliente.getCpf())) {
+                for (int i = 0; i < emprestimos.length; i++) {
+                    if (emprestimos[i] != null && emprestimos[i].getCliente().getCpf().equals(cliente.getCpf())) {
                         for (Livro l : livros) {
-                            if (l != null && l.getCodigo() == emprestimo.getLivro().getCodigo()) {
+                            if (l != null && l.getCodigo() == emprestimos[i].getLivro().getCodigo()) {
                                 if (l.devolverLivro()) {
                                     System.out.println("Livro devolvido com sucesso!");
-                                    emprestimo = null;
+                                    emprestimos[i] = null;
+                                    menu();
+                                    return;
                                 } else {
                                     System.out.println("Não foi possível devolver o livro");
                                 }
@@ -235,11 +241,13 @@ public class Main {
                         }
                     }
                 }
-                break;
+                System.out.println("Cliente não possui empréstimos");
             default:
                 System.out.println("Opção inválida");
                 break;
         }
+        scanner.nextLine();
+        menu();
     }
 
 
