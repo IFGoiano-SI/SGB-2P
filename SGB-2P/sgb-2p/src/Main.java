@@ -168,6 +168,8 @@ public class Main {
         menu();
     }
 
+    
+
     public static void cadastrarLivro() {
         //cadastrar novo livro
         System.out.println("Cadastrar novo livro");
@@ -323,7 +325,7 @@ public class Main {
             //criar um arquivo com o nome da data atual
 
             LocalDate hoje = LocalDate.now();
-            String nomeArquivo = "exportar-dados-"+hoje.toString() + ".csv";
+            String nomeArquivo = "exportar-dados-" + hoje.toString() + ".csv";
             File arquivo = new File(nomeArquivo);
             //escrever no arquivo
             FileWriter fileWriter = new FileWriter(arquivo);
@@ -335,7 +337,7 @@ public class Main {
             bufferedWriter.newLine();
             for (Livro livro : livros) {
                 if (livro != null) {
-                    bufferedWriter.write(livro.getCodigo() + ";" + livro.getTitulo() + ";" + livro.getAutor() + ";" + livro.getAnoPublicacao() + ";" + livro.getNumExemplares()+";");
+                    bufferedWriter.write(livro.getCodigo() + ";" + livro.getTitulo() + ";" + livro.getAutor() + ";" + livro.getAnoPublicacao() + ";" + livro.getNumExemplares() + ";");
                     bufferedWriter.newLine();
                 }
             }
@@ -446,7 +448,17 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Devolver livro");
-                    menu = 0;
+                    System.out.println("Deseja devolver um livro?");
+                    while (!scanner.hasNextInt()) {
+                        System.out.print("Digite um número válido: ");
+                        scanner.next();
+                    }
+                    int opc4 = scanner.nextInt();
+                    scanner.nextLine();
+                    if (opc4 == 1) {
+                        devolverLivro();
+                        return;
+                    }
                     break;
                 case 5:
                     System.out.println("Deseja excluir um livro?");
@@ -462,14 +474,14 @@ public class Main {
                     }
                     break;
                 case 6:
-                    System.out.println("Excluir livro");
+                    System.out.println("Excluir cliente");
                     removerCliente();
                     break;
                 case 7:
                     System.out.println("Relatorios...");
-                    try{
+                    try {
                         Relatorio.exibirMenuRelatorio(clientes, livros, emprestimos);
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println("Erro ao exibir relatórios!");
                         scanner.nextLine();
                         menu();
