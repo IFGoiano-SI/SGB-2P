@@ -168,7 +168,81 @@ public class Main {
         menu();
     }
 
-    
+    public static void devolverLivro() {
+        //devolver livro
+        System.out.println("Devolver livro");
+        System.out.println("1 - Devolver livro por código");
+        System.out.println("2 - Devolver livro por CPF");
+        System.out.print("Digite a opção desejada: ");
+        while (!scanner.hasNextInt()) {
+            System.out.print("Digite um número válido: ");
+            scanner.next();
+        }
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+        switch (opcao) {
+            case 1:
+                System.out.print("Digite o código do livro: ");
+                while (!scanner.hasNextInt()) {
+                    System.out.print("Digite um código válido: ");
+                    scanner.next();
+                }
+                int codigo = scanner.nextInt();
+                scanner.nextLine();
+                Livro livro = getLivro(codigo);
+                if (livro == null) {
+                    System.out.println("Livro não encontrado!");
+                    scanner.nextLine();
+                    menu();
+                    return;
+                }
+                for (Emprestimo emprestimo : emprestimos) {
+                    if (emprestimo != null && emprestimo.getLivro().getCodigo() == livro.getCodigo()) {
+                        for (Livro l : livros) {
+                            if (l != null && l.getCodigo() == livro.getCodigo()) {
+                                if (l.devolverLivro()) {
+                                    System.out.println("Livro devolvido com sucesso!");
+                                    emprestimo = null;
+                                } else {
+                                    System.out.println("Não foi possível devolver o livro");
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 2:
+                System.out.print("Digite o CPF do cliente: ");
+                String cpf = scanner.nextLine();
+                Cliente cliente = getCliente(cpf);
+                if (cliente == null) {
+                    System.out.println("Cliente não encontrado!");
+                    scanner.nextLine();
+                    menu();
+                    return;
+                }
+                for (Emprestimo emprestimo : emprestimos) {
+                    if (emprestimo != null && emprestimo.getCliente().getCpf().equals(cliente.getCpf())) {
+                        for (Livro l : livros) {
+                            if (l != null && l.getCodigo() == emprestimo.getLivro().getCodigo()) {
+                                if (l.devolverLivro()) {
+                                    System.out.println("Livro devolvido com sucesso!");
+                                    emprestimo = null;
+                                } else {
+                                    System.out.println("Não foi possível devolver o livro");
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                System.out.println("Opção inválida");
+                break;
+        }
+    }
+
+
 
     public static void cadastrarLivro() {
         //cadastrar novo livro
