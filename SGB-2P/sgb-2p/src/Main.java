@@ -479,7 +479,7 @@ public class Main {
                     System.out.println("Exportar CSV");
                     exportarCSV();
                     return;
-                case 9:
+                case 0:
                     System.out.println("Saindo...");
                     System.exit(0);
                     menu = 0;
